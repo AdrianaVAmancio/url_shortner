@@ -1,49 +1,75 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# URL Shortener Application
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repositoryUrl.
+This is a URL Shortener application built with Java, Springboot and PostgreSQL, and deployed on Google Cloud Platform (GCP) using a CI/CD pipeline.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+## Overview
 
----
+The URL Shortener application allows users to shorten long URLs and access them via short, easy-to-remember links.
 
-## Edit a file
+## Features
 
-YouÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ll start by editing this README file to learn how to edit a file in Bitbucket.
+- Shorten long URLs
+- Redirect to original URLs
+- Track usage statistics
+- RESTful API for programmatic access
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button..
+## Architecture
 
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and youÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ll see the change you just made.
-6. Go back to the **Source** page.
-6. Go back to the **Source** page.
+The application follows a microservices architecture and is deployed on GCP. The key components are:
 
----
-"This is my change to the the readme file" -
+1. **Git Repository**: Stores the application's source code.
+2. **Cloud Build**: Automates the build, test, and deployment process.
+3. **Docker**: Containerizes the application.
+4. **Google Container Registry**: Stores Docker images.
+5. **Google Kubernetes Engine (GKE)**: Orchestrates container deployment and scaling.
+6. **Load Balancer**: Distributes traffic across multiple instances.
 
 
-## Create a file
+## Prerequisites
 
-Next, youÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ll add a new file to this repositoryUrl. // This is my change to the file :)
+- [Docker](https://www.docker.com/get-started)
+- [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+- A GCP account with permissions to use Google Kubernetes Engine, Container Registry, and Cloud Build.
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
-6. This is my change - Ross Moore.
+## Installation
 
-Before you move on, go ahead and explore the repositoryUrl. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/AdrianaVAmancio/url-shortener.git
+    cd url-shortener
+    ```
 
----
+2. **Build the Docker image:**
+    ```sh
+    docker build -t url-shortener .
+    ```
 
-## Clone a repositoryUrl
+3. **Run the Docker container locally:**
+    ```sh
+    docker run -p 8080:8080 url-shortener
+    ```
 
-Use these steps to clone from SourceTree, our client for using the repositoryUrl command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repositoryUrl](https://confluence.atlassian.com/x/4whODQ).
+## Usage
 
-1. YouÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if youÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢d like to and then click **Clone**.
-4. Open the directory you just created to see your repositoryÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s files.
+- Access the application at `http://localhost:8080`.
+- Use the API to shorten URLs:
+    ```sh
+    curl -X POST http://localhost:8080/api/shorten -d '{"url": "https://example.com"}' -H "Content-Type: application/json"
+    ```
 
-Now that you're more familiar with your Bitbucket repositoryUrl, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+## CI/CD Pipeline
+
+The CI/CD pipeline is set up using Google Cloud Build. The pipeline performs the following steps:
+
+1. **Trigger**: Automatically triggered by a push to the Git repository.
+2. **Build**: Builds the Docker image for the application.
+3. **Test**: Runs unit and integration tests.
+4. **Deploy**: Pushes the Docker image to Google Container Registry and deploys it to GKE.
+
+## Deployment
+
+1. **Configure GCP credentials:**
+    Ensure you have the necessary credentials and permissions set up for your GCP project.
+    ```sh
+    gcloud auth login
+    gcloud config set pr
